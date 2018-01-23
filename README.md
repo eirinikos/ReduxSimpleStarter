@@ -24,3 +24,15 @@ Our app is made browser-ready thanks to **webpack, babel, and `bundle.js`**.
 In our `/index.html` file, our script tag references `bundle.js`, which represents the sum of all of the JS in our app. [webpack](https://en.wikipedia.org/wiki/Webpack) and [babel](https://babeljs.io/) are the libraries responsible for compiling All The JS into `bundle.js`. It's not yet clear to me *exactly* how webpack and babel work with each other and *exactly* where `bundle.js` lives, but the [webpack config file](https://github.com/eirinikos/ReduxSimpleStarter/blob/master/webpack.config.js) seems to lend clues.
 
 Babel is what we rely on to transpile our ES6 to vanilla JS (i.e., browser-readable ES5). Try playing around in babel's [in-browser REPL](https://babeljs.io/) to see just how illegible React code can become (if written in plain ES5 script).
+
+### YouTube Data API
+The first app I'm making is a video app that makes use of the YouTube Data API. It will have a search bar input at the top of the page, above a video player and details for the currently-playing video (title and description).
+
+On the right side of the page, there'll be a list of video preview items. This list will be populated according to the search results returned by the API in response to the search request sent via the search bar input.
+
+To access Google APIs, go [here](https://console.developers.google.com).
+
+You can find the YouTube Data API by searching in Google's API library. Be sure to enable the API, create API credentials, and add the API key to `index.js`.
+
+Then, install the `youtube-api-search` package with `npm install --save youtube-api-search`. (`--save` adds the package to our `package.json` file).
+
