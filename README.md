@@ -13,7 +13,7 @@ Checkout that repo, install dependencies, then start the `gulp` process with the
 I'm relying on Stephen Grider's tutorial as I revisit React in 2018. The commits I make to this repo are meant to document my learning and review process. The motivation for this repo is similar to the motivation for [this Django repo](https://github.com/eirinikos/django-tutorial-mysite); that is, I want to write a handy study journal (a log) that my future self can read when she revisits this moment in time.
 
 # React, ES6, and JSX
-React is a JS library that produces HTML, and React code is written in the form of individual **components** (i.e., views). The legibility of React code depends largely on the usage of JSX, which allows us to write JS functions that incorporate HTML syntax. (When referencing JS variables within JSX, though, make sure to surround the variables with curly braces, e.g., `{this.state.term}`.)
+React is a JS library that produces HTML, and React code is written in the form of individual **components** (i.e., views). The legibility of React code depends largely on the usage of JSX, which allows us to write JS functions that incorporate HTML syntax. (NB: JS variable references within JSX should be surrounded with curly braces, e.g., `{this.state.term}`.)
 
 Our app incorporates ES6 conventions, although neither JSX nor ES6 are currently interpretable by the browser. We make it browser-ready thanks to **webpack, babel, and `bundle.js`**.
 
@@ -31,20 +31,20 @@ The tutorial introduces the concept of **state** in Sections 1.17 and 1.18. **St
 
 Whenever a class-based component's state changes, the component re-renders. A component's state change triggers all children components to re-render, as well.
 
-In order to initialize a component's state, be sure to declare a class constructor method, e.g.,
+In order to **initialize** a component's state, be sure to declare a class constructor method, e.g.,
 
     class SearchBar extends Component {
       constructor(props) {
         super(props);
 
         this.state = {
-          property1: 'value1'
-          property2: 'value2'
-          property3: 'value3'
+          property1: 'value1',
+          property2: 'value2',
+          property3: 'value3',
         };
       }
 
-**In order to update a component's state, be sure to use `this.setState()`**, e.g.,
+In order to **update** a component's state, be sure to use `this.setState()`, e.g.,
 
     render() {
       return <input onChange={event => this.setState({ property1: 'newvalue1' })} />;
@@ -54,7 +54,7 @@ In order to initialize a component's state, be sure to declare a class construct
 
 ----
 
-In Section 1.18, we can see the state-change and component-rerender cycle at work with:
+In Section 1.18, we can see the state-change and component-render cycle at work with:
 
     render() {
       return (
@@ -65,13 +65,33 @@ In Section 1.18, we can see the state-change and component-rerender cycle at wor
       );
     }
 
-Whenever a user modifies input in the search bar, state gets updated with `this.setState()`, which then triggers the render function to run anew. State is then retrieved again with `this.state.term` and rendered on the page, alongside `VALUE OF THE INPUT`.
+The component is first instantiated and then rendered with state in its initial state. Whenever a user modifies input in the search bar, state gets updated with `this.setState()`, which then triggers the render function to run anew. State is then retrieved again with `this.state.term` and rendered on the page, alongside `VALUE OF THE INPUT`.
 
 ![state change and re-rendering](img/readme/1.18_react_this-state-term.png)
 
-*State change and re-rendering at work in the browser*
+*State change and component re-rendering at work in the browser*
 
 ----
+
+### Controlled components
+React employs a **declarative** flow of data, whereas a library like jQuery employs an **imperative** flow. The concept of **controlled components** is an example of this **declarative** flow, in that **its value is set by state and its value changes only when its state changes.** Here's a version of `SearchBar`'s render function that demonstrates this at work.
+
+    render() {
+      return (
+        <div>
+          <input
+            value = {this.state.term}
+            onChange={event => this.setState({ term: event.target.value })} />
+        </div>
+      );
+    }
+
+In sum, when a user enters or re-enters a value into a controlled form element like our `SearchBar`, they are not actually setting the value of the element. Instead, they are setting into motion this series of events:
+
+- they trigger a change event on the form element
+- the change event triggers a state change
+- the state change triggers a re-rendering of the component
+- the re-rendering of the component sets the value of the element
 
 ### Event handlers
 This is the tutorial's first version of `SearchBar`'s event handler (as seen in Section 1.16):
